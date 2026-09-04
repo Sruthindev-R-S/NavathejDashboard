@@ -15,8 +15,25 @@ export default function Employee(){
     }
 
     useEffect(() => {
-        getData()
+        let isMounted = true
+        async function fetchEmployees() {
+            try {
+                const response = await fetch('https://vehicle-9srx.onrender.com/getEmployee')
+                const data = await response.json()
+                if (isMounted) {
+                    setUsers(Array.isArray(data) ? data : data.users ?? data.employees ?? [])
+                }
+            } catch (error) {
+                console.error('Unable to load employees:', error)
+            }
+        }
+
+        fetchEmployees()
+        return () => {
+            isMounted = false
+        }
     }, [])
+
 
     async function onSubmit(event){
         event.preventDefault()
@@ -41,6 +58,7 @@ export default function Employee(){
             }
 
             await getData()
+
             form.reset()
         } catch (error) {
             console.error('Unable to add employee:', error)
@@ -77,7 +95,7 @@ export default function Employee(){
                 <button type='submit'>Submit</button>
             </form>
          </div>
-        <div>
+        <div className='table-responsive'>
             <table>
             <thead>
                 <tr>

@@ -1,18 +1,29 @@
-table{
-    width:100%;
-    
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 10px;
-    color: white;
-    border-spacing: 10px;
-    font-size: 20px;
-    
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    margin-top: 12px;
 }
+
+table {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    color: white;
+    border-spacing: 8px;
+    font-size: 16px;
+    border-collapse: separate;
+}
+
 .add-employee {
     display: flex;
     justify-content: center;
     padding: 24px 16px 8px;
+    box-sizing: border-box;
+    width: 100%;
 }
+
 .add-employee form {
     display: grid;
     grid-template-columns: minmax(120px, 160px) minmax(180px, 320px);
@@ -26,7 +37,9 @@ table{
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
+    box-sizing: border-box;
 }
+
 .add-employee input {
     width: 100%;
     min-height: 40px;
@@ -35,7 +48,10 @@ table{
     background-color: #f7f9fc;
     color: #12284c;
     font: inherit;
+    font-size: 16px;
+    box-sizing: border-box;
 }
+
 .add-employee button {
     grid-column: 2;
     justify-self: start;
@@ -47,96 +63,158 @@ table{
     font: inherit;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
+
 .add-employee button:hover {
     background-color: rgb(4, 126, 27);
 }
-th{
-    padding: .5%;
+
+th {
+    padding: 10px 14px;
+    font-weight: 600;
 }
-th:nth-child(odd){
+
+th:nth-child(odd) {
     border-radius: 8px;
     background-color: rgba(31, 61, 143, 0.752);
-    
-
 }
-th:nth-child(even){
+
+th:nth-child(even) {
     border-radius: 8px;
     background-color: rgb(5, 85, 204);
 }
-td{
+
+td {
     text-align: center;
-    padding: .5%;
-    gap: 10px;
-    
+    padding: 10px 14px;
 }
-td:nth-child(odd){
+
+td:nth-child(odd) {
     border-radius: 8px;
     background-color: rgba(31, 61, 143, 0.752);
-    
-    
-    
-
 }
-td:nth-child(even){
+
+td:nth-child(even) {
     border-radius: 8px;
     background-color: rgb(5, 85, 204);
+}
 
-}
-.delete{
+.delete,
+.Accept-Button,
+.waiting {
     color: rgb(253, 251, 251);
-    padding: 1%;
-    border-radius: 15%;
-    background-color: red;
+    padding: 8px 14px;
+    border-radius: 6px;
     border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.1s ease;
 }
-.Table-content{
+
+.delete:hover,
+.Accept-Button:hover,
+.waiting:hover {
+    opacity: 0.88;
+}
+
+.delete:active,
+.Accept-Button:active,
+.waiting:active {
+    transform: scale(0.97);
+}
+
+.delete {
+    background-color: #e53935;
+}
+
+.Table-content {
     display: flex;
-    gap:10px;
+    gap: 10px;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
-.Accept-Button{
-    color: rgb(253, 251, 251);
-    padding: 1%;
-    border-radius: 15%;
-    background-color: rgb(5, 158, 33);
-    border: none;
-    
-}
-.waiting{
-    color: rgb(253, 251, 251);
-    padding: 1%;
-    border-radius: 15%;
-    background-color: rgb(31, 5, 158);
-    border: none;
-}
-input{
-    padding: 8px 12px;
 
+.Accept-Button {
+    background-color: rgb(5, 158, 33);
 }
-@media (max-width: 480px) {
+
+.waiting {
+    background-color: rgb(31, 5, 158);
+}
+
+input {
+    padding: 8px 12px;
+}
+
+@media (max-width: 768px) {
+    table {
+        font-size: 13px;
+        border-spacing: 6px;
+        min-width: 650px;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    .delete,
+    .Accept-Button,
+    .waiting {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 540px) {
     .add-employee form {
         grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 10px;
+        font-size: 16px;
     }
+
     .add-employee button {
         grid-column: 1;
+        width: 100%;
     }
 }
-.Update-body{
+
+.Update-body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 100px);
+    padding: 24px 16px;
+    box-sizing: border-box;
 }
-.Update-text{
-    width: min(30vw, 360px);
-    aspect-ratio: 1;
+
+.Update-text {
+    width: min(92vw, 380px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0;
-    background-color:#143872;
+    background-color: #143872;
     gap: 20px;
+    padding: 36px 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    box-sizing: border-box;
 }
+
+.Update-text input {
+    width: 100%;
+    min-height: 42px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: #f7f9fc;
+    color: #12284c;
+    font-size: 16px;
+}
+

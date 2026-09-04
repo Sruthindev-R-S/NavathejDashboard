@@ -1,16 +1,70 @@
-h2{
-    font-weight:35;
-    
+.ButtonWrapper {
+    display: inline-flex;
 }
-h2:hover{
-    font-weight:35;
-    
-}
-.Buttons{
-    background-color:transparent;
+
+.Buttons {
+    background-color: transparent;
     border: none;
-    color: white;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
-.Buttons.active{
+
+.Buttons h2 {
+    font-weight: 500;
+    font-size: 1.05rem;
+    margin: 0;
+    line-height: 1.2;
+    transition: color 0.2s ease;
+}
+
+.Buttons:hover {
+    background-color: rgba(255, 255, 255, 0.08);
     color: #49d17d;
 }
+
+.Buttons:hover h2 {
+    color: #49d17d;
+}
+
+.Buttons.active {
+    color: #49d17d;
+    background-color: rgba(73, 209, 125, 0.12);
+}
+
+.Buttons.active h2 {
+    color: #49d17d;
+    font-weight: 600;
+}
+
+/* Mobile full-width touch targets */
+@media (max-width: 860px) {
+    .ButtonWrapper {
+        width: 100%;
+        display: flex;
+    }
+
+    .Buttons {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 14px 18px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+    }
+
+    .Buttons h2 {
+        font-size: 1.1rem;
+    }
+
+    .Buttons.active {
+        background-color: rgba(73, 209, 125, 0.18);
+    }
+}
+

@@ -97,7 +97,7 @@ export default function Customers(){
         })
 
     return(
-        <div>
+        <div className='table-responsive'>
             <table>
                 <thead>
                     <tr>

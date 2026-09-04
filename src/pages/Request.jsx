@@ -97,7 +97,7 @@ export default function Request(){
         })
 
     return(
-        <div>
+        <div className='table-responsive'>
             <table>
                 <thead>
                     <tr>
