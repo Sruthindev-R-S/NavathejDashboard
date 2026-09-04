@@ -8,6 +8,49 @@ table{
     font-size: 20px;
     
 }
+.add-employee {
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px 8px;
+}
+.add-employee form {
+    display: grid;
+    grid-template-columns: minmax(120px, 160px) minmax(180px, 320px);
+    align-items: center;
+    gap: 12px 16px;
+    width: min(100%, 520px);
+    padding: 20px;
+    border: 1px solid rgba(94, 150, 255, 0.55);
+    border-radius: 8px;
+    background-color: rgba(3, 26, 62, 0.75);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+.add-employee input {
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 6px;
+    background-color: #f7f9fc;
+    color: #12284c;
+    font: inherit;
+}
+.add-employee button {
+    grid-column: 2;
+    justify-self: start;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgb(5, 158, 33);
+    color: white;
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+}
+.add-employee button:hover {
+    background-color: rgb(4, 126, 27);
+}
 th{
     padding: .5%;
 }
@@ -71,6 +114,14 @@ td:nth-child(even){
 input{
     padding: 8px 12px;
 
+}
+@media (max-width: 480px) {
+    .add-employee form {
+        grid-template-columns: 1fr;
+    }
+    .add-employee button {
+        grid-column: 1;
+    }
 }
 .Update-body{
     display: flex;

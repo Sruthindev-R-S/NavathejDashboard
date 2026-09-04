@@ -1,25 +1,83 @@
+import { useEffect, useState } from 'react'
 import '../styles/pages.css'
 
 export default function Employee(){
-    const user = [
-        {
-            id:1,name:"Sruthin",action:"hello"
-        },
-        {
-            id:2,name:"Anil",action:"hello"
-        },
-        {
-            id:3,name:"Kiran",action:"hello"
-        },
-        {
-            id:4,name:"Rahul",action:"hello"
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        async function getData() {
+            const response = await fetch('https://vehicle-9srx.onrender.com/getemployee')
+            const data = await response.json()
+            setUsers(Array.isArray(data) ? data : data.users ?? data.employees ?? [])
         }
-    ]
-    function onClick(){
-        alert("Deleted")
+
+        getData().catch((error) => {
+            console.error('Unable to load employees:', error)
+        })
+    }, [])
+
+    async function onSubmit(event){
+        event.preventDefault()
+        const form = event.currentTarget
+        const formData = new FormData(form)
+        const newEmployee = {
+            phone_number: formData.get('phone_number'),
+            name: formData.get('name')
+        }
+
+        try {
+            const response = await fetch('https://vehicle-9srx.onrender.com/addEmployee', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newEmployee)
+            })
+
+            if (!response.ok) {
+                throw new Error(`Add request failed with status ${response.status}`)
+            }
+
+            setUsers((currentUsers) => [...currentUsers, {
+                Name: newEmployee.name,
+                Phone_number: newEmployee.phone_number
+            }])
+            form.reset()
+        } catch (error) {
+            console.error('Unable to add employee:', error)
+        }
+    }
+   
+    
+    async function onClick(phoneNumber){
+        try {
+            const query = new URLSearchParams({ phone_number: String(phoneNumber) })
+            const response = await fetch(
+                `https://vehicle-9srx.onrender.com/deleteEmployee?${query}`,
+                { method: 'DELETE' }
+            )
+
+            if (!response.ok) {
+                throw new Error(`Delete request failed with status ${response.status}`)
+            }
+
+            setUsers((currentUsers) => currentUsers.filter(
+                (employee) => employee.Phone_number !== phoneNumber
+            ))
+        } catch (error) {
+            console.error('Unable to delete employee:', error)
+        }
     }
     return(<div>
-         
+         <div className='add-employee'>
+            <form onSubmit={onSubmit}>
+                <label htmlFor='employee-name'>Name</label>
+                <input id='employee-name' name='name' type='text' required />
+                <label htmlFor='employee-phone'>Phone Number</label>
+                <input id='employee-phone' name='phone_number' type='tel' required />
+                <button type='submit'>Submit</button>
+            </form>
+         </div>
         <div>
             <table>
             <thead>
@@ -30,6 +88,7 @@ export default function Employee(){
                     <th>
                         Name
                     </th>
+                    <th>Phone Number</th>
                     <th>
                         Action
                     </th>
@@ -37,16 +96,19 @@ export default function Employee(){
     
             </thead>
             <tbody>
-                {user.map((employee)=>(
-                    <tr key={employee.id}>
+                {users.map((employee, index)=>(
+                    <tr key={`${employee.Name}-${employee.Phone_number}`}>
                         <td>
-                            {employee.id}
+                            {index + 1}
                         </td>
                         <td>
-                            {employee.name}
+                            {employee.Name}
                         </td>
                         <td>
-                            <button type='button' className='delete' onClick={onClick}>Delete</button>
+                            {employee.Phone_number}
+                        </td>
+                        <td>
+                            <button type='button' className='delete' onClick={() => onClick(employee.Phone_number)}>Delete</button>
                         </td>
 
                     </tr>
