@@ -1,16 +1,56 @@
-# React + Vite
+# NavathejDashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Simple React dashboard scaffolded with Vite.
 
-Currently, two official plugins are available:
+This repository contains a small React app bootstrapped with Vite. It includes ESLint and a minimal component layout under `src/`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Requirements
 
-## React Compiler
+- Node.js (16+) and npm or yarn
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Quick Start
 
-## Expanding the ESLint configuration
+Install dependencies:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+```
+
+Run development server with HMR:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview production build locally:
+
+```bash
+npm run preview
+```
+
+Lint the project:
+
+```bash
+npm run lint
+```
+
+## Project structure
+
+- `src/` — React source files (entry points: `main.jsx`, `App.jsx`)
+- `public/` — static assets served at root
+- `index.html` — Vite HTML entry
+
+Open `src/App.jsx` to start editing the dashboard UI.
+
+## Notes
+
+- Scripts are defined in `package.json` (`dev`, `build`, `preview`, `lint`).
+- This project uses Vite and React; see Vite docs for advanced configuration.
+
+If you'd like, I can add a usage section, screenshots, or expand the README with deployment steps.
