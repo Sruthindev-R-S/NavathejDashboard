@@ -4,16 +4,18 @@ import '../styles/pages.css'
 export default function Employee(){
     const [users, setUsers] = useState([])
 
-    useEffect(() => {
-        async function getData() {
-            const response = await fetch('https://vehicle-9srx.onrender.com/getemployee')
+    async function getData() {
+        try {
+            const response = await fetch('https://vehicle-9srx.onrender.com/getEmployee')
             const data = await response.json()
             setUsers(Array.isArray(data) ? data : data.users ?? data.employees ?? [])
-        }
-
-        getData().catch((error) => {
+        } catch (error) {
             console.error('Unable to load employees:', error)
-        })
+        }
+    }
+
+    useEffect(() => {
+        getData()
     }, [])
 
     async function onSubmit(event){
@@ -38,10 +40,7 @@ export default function Employee(){
                 throw new Error(`Add request failed with status ${response.status}`)
             }
 
-            setUsers((currentUsers) => [...currentUsers, {
-                Name: newEmployee.name,
-                Phone_number: newEmployee.phone_number
-            }])
+            await getData()
             form.reset()
         } catch (error) {
             console.error('Unable to add employee:', error)
@@ -97,9 +96,9 @@ export default function Employee(){
             </thead>
             <tbody>
                 {users.map((employee, index)=>(
-                    <tr key={`${employee.Name}-${employee.Phone_number}`}>
+                    <tr key={employee.Id ?? employee.id ?? `${employee.Name}-${employee.Phone_number}`}>
                         <td>
-                            {index + 1}
+                            {employee.Id ?? employee.id ?? index + 1}
                         </td>
                         <td>
                             {employee.Name}
