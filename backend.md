@@ -2,11 +2,6 @@
 
 ## Base URL
 ```
-http://localhost:3000
-```
-
-### Deployed (Render) Base URL
-```
 https://vehicle-9srx.onrender.com
 ```
 
@@ -280,27 +275,27 @@ Authorization: Bearer <jwt_token>
 
 ### Register
 ```bash
-curl -X POST http://localhost:3000/register \
+curl -X POST https://vehicle-9srx.onrender.com/register \
   -H "Content-Type: application/json" \
   -d '{"username":"john_doe","password":"secure_password123"}'
 ```
 
 ### Login
 ```bash
-curl -X POST http://localhost:3000/login \
+curl -X POST https://vehicle-9srx.onrender.com/login \
   -H "Content-Type: application/json" \
   -d '{"username":"john_doe","password":"secure_password123"}'
 ```
 
 ### Get Employee (Protected)
 ```bash
-curl -X GET http://localhost:3000/getEmployee \
+curl -X GET https://vehicle-9srx.onrender.com/getEmployee \
   -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE"
 ```
 
 ### Add Employee (Protected)
 ```bash
-curl -X POST http://localhost:3000/addEmployee \
+curl -X POST https://vehicle-9srx.onrender.com/addEmployee \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN_HERE" \
   -d '{"name":"John Smith","email":"john@example.com","department":"Engineering","position":"Developer"}'
@@ -312,7 +307,7 @@ curl -X POST http://localhost:3000/addEmployee \
 
 ### Register
 ```javascript
-fetch('http://localhost:3000/register', {
+fetch('https://vehicle-9srx.onrender.com/register', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -328,7 +323,7 @@ fetch('http://localhost:3000/register', {
 
 ### Login
 ```javascript
-fetch('http://localhost:3000/login', {
+fetch('https://vehicle-9srx.onrender.com/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -349,7 +344,7 @@ fetch('http://localhost:3000/login', {
 ```javascript
 const token = localStorage.getItem('token');
 
-fetch('http://localhost:3000/getEmployee', {
+fetch('https://vehicle-9srx.onrender.com/getEmployee', {
   method: 'GET',
   headers: {
     'Authorization': `Bearer ${token}`
@@ -363,7 +358,7 @@ fetch('http://localhost:3000/getEmployee', {
 ```javascript
 const token = localStorage.getItem('token');
 
-fetch('http://localhost:3000/addEmployee', {
+fetch('https://vehicle-9srx.onrender.com/addEmployee', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
