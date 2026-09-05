@@ -1,0 +1,169 @@
+.Login-container {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #12284C;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.Login-card {
+    width: min(100%, 420px);
+    background-color: #031A3E;
+    border: 1px solid rgba(94, 150, 255, 0.35);
+    border-radius: 14px;
+    padding: 36px 30px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Login-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.Login-brand img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.Login-brand h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.Login-subtitle {
+    color: #b0c4de;
+    font-size: 0.95rem;
+    margin: 0 0 24px;
+    text-align: center;
+}
+
+.Login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.Login-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    position: relative;
+}
+
+.Login-input-group label {
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.Login-input-group input {
+    width: 100%;
+    min-height: 42px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: #f7f9fc;
+    color: #12284c;
+    font-size: 15px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.Login-input-group input:focus {
+    border-color: #49d17d;
+    box-shadow: 0 0 0 3px rgba(73, 209, 125, 0.25);
+}
+
+.Password-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.Password-wrapper input {
+    padding-right: 44px;
+}
+
+.Password-toggle {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: #556987;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 6px;
+    user-select: none;
+}
+
+.Password-toggle:hover {
+    color: #12284c;
+}
+
+.Login-button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background-color: #059e21;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.Login-button:hover:not(:disabled) {
+    background-color: #047e1b;
+}
+
+.Login-button:active:not(:disabled) {
+    transform: scale(0.99);
+}
+
+.Login-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.Login-error {
+    background-color: rgba(229, 57, 53, 0.15);
+    border: 1px solid rgba(229, 57, 53, 0.5);
+    color: #ff8585;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    margin: 0 0 16px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .Login-card {
+        padding: 28px 20px;
+    }
+
+    .Login-brand h1 {
+        font-size: 1.5rem;
+    }
+}

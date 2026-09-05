@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiFetch } from '../config/api'
 import '../styles/pages.css'
 
 function formatDate(dateString) {
@@ -39,12 +40,12 @@ function getTimestamp(dateString) {
     return isNaN(d.getTime()) ? Infinity : d.getTime()
 }
 
-export default function Request(){
+export default function Pending(){
     const [vehicles, setVehicles] = useState([])
 
     useEffect(() => {
         async function getData() {
-            const response = await fetch('https://vehicle-9srx.onrender.com/getVehicle')
+            const response = await apiFetch('/getVehicle')
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}`)
             }
@@ -61,11 +62,8 @@ export default function Request(){
         if (!vehicleNumber || vehicleNumber === '-') return
 
         try {
-            const response = await fetch('https://vehicle-9srx.onrender.com/updateAction', {
+            const response = await apiFetch('/updateAction', {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     vehicle_number: vehicleNumber,
                     action: action === 0 ? '0' : action

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiFetch } from '../config/api'
 import '../styles/pages.css'
 
 function formatDate(dateString) {
@@ -22,21 +23,67 @@ function formatDate(dateString) {
     return `${day}-${month}-${year}`
 }
 
-function getTimestamp(dateString) {
-    if (!dateString) return Infinity
+function getYearlyRenewInfo(dateString) {
+    if (!dateString || dateString === '-') {
+        return { formattedDate: '-', timestamp: Infinity, isOver: false }
+    }
     const str = String(dateString).trim()
+    let day = null
+    let month = null
     const parts = str.split('T')[0].split('-')
     if (parts.length === 3) {
         const [p1, p2, p3] = parts
         if (p1.length === 4) {
-            return new Date(Number(p1), Number(p2) - 1, Number(p3)).getTime()
-        }
-        if (p3.length === 4) {
-            return new Date(Number(p3), Number(p2) - 1, Number(p1)).getTime()
+            day = Number(p3)
+            month = Number(p2)
+        } else if (p3.length === 4) {
+            day = Number(p1)
+            month = Number(p2)
         }
     }
-    const d = new Date(str)
-    return isNaN(d.getTime()) ? Infinity : d.getTime()
+    if (day === null || month === null || isNaN(day) || isNaN(month)) {
+        const d = new Date(str)
+        if (!isNaN(d.getTime())) {
+            day = d.getDate()
+            month = d.getMonth() + 1
+        }
+    }
+    if (day === null || month === null || isNaN(day) || isNaN(month)) {
+        return { formattedDate: '-', timestamp: Infinity, isOver: false }
+    }
+
+    const now = new Date()
+    const currentYear = now.getFullYear()
+    const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+
+    const isCurrentYearLeap = (currentYear % 4 === 0 && currentYear % 100 !== 0) || (currentYear % 400 === 0)
+    const dayThisYear = (month === 2 && day === 29 && !isCurrentYearLeap) ? 28 : day
+    const thisYearDate = new Date(currentYear, month - 1, dayThisYear)
+
+    let targetYear = currentYear
+    let targetDay = dayThisYear
+    let isOver = false
+
+    // If the yearly renew date for the current year is already over, show the new renew date for next year
+    if (thisYearDate < todayMidnight) {
+        isOver = true
+        targetYear = currentYear + 1
+        const isNextYearLeap = (targetYear % 4 === 0 && targetYear % 100 !== 0) || (targetYear % 400 === 0)
+        targetDay = (month === 2 && day === 29 && !isNextYearLeap) ? 28 : day
+    }
+
+    const finalDate = new Date(targetYear, month - 1, targetDay)
+    const formattedDate = `${String(targetDay).padStart(2, '0')}-${String(month).padStart(2, '0')}-${targetYear}`
+
+    return {
+        formattedDate,
+        timestamp: finalDate.getTime(),
+        isOver
+    }
+}
+
+function getYearlyRenewTimestamp(dateString) {
+    return getYearlyRenewInfo(dateString).timestamp
 }
 
 export default function Upcoming(){
@@ -44,7 +91,7 @@ export default function Upcoming(){
 
     useEffect(() => {
         async function getData() {
-            const response = await fetch('https://vehicle-9srx.onrender.com/getVehicle')
+            const response = await apiFetch('/getVehicle')
             if (!response.ok) {
                 throw new Error(`Request failed with status ${response.status}`)
             }
@@ -61,11 +108,8 @@ export default function Upcoming(){
         if (!vehicleNumber || vehicleNumber === '-') return
 
         try {
-            const response = await fetch('https://vehicle-9srx.onrender.com/updateAction', {
+            const response = await apiFetch('/updateAction', {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     vehicle_number: vehicleNumber,
                     action: action
@@ -93,7 +137,7 @@ export default function Upcoming(){
         .sort((a, b) => {
             const dateA = a.data?.insurance_upto || a.insuance_date || a.insurance_expiry
             const dateB = b.data?.insurance_upto || b.insuance_date || b.insurance_expiry
-            return getTimestamp(dateA) - getTimestamp(dateB)
+            return getYearlyRenewTimestamp(dateA) - getYearlyRenewTimestamp(dateB)
         })
 
     return(
@@ -109,6 +153,9 @@ export default function Upcoming(){
                         </th>
                         <th>
                             Insurance Expiry
+                        </th>
+                        <th>
+                            Yearly Renew
                         </th>
                         <th>
                             Insurance Company
@@ -127,6 +174,7 @@ export default function Upcoming(){
                         const ownerName = vehicle.data?.owner_name || vehicle.Owner_name || vehicle.owner_name || '-'
                         const rawExpiryDate = vehicle.data?.insurance_upto || vehicle.insuance_date || vehicle.insurance_expiry
                         const insuranceExpiry = formatDate(rawExpiryDate)
+                        const renewInfo = getYearlyRenewInfo(rawExpiryDate)
                         const insuranceCompany = vehicle.data?.insurance_company || vehicle.insurance_company || '-'
                         const mobileNumber = vehicle.mobile_number || vehicle.data?.mobile_number || '-'
 
@@ -135,6 +183,19 @@ export default function Upcoming(){
                                 <td>{vehicleNumber}</td>
                                 <td>{ownerName}</td>
                                 <td>{insuranceExpiry}</td>
+                                <td>
+                                    <div className="renew-cell">
+                                        <span>{renewInfo.formattedDate}</span>
+                                        {renewInfo.isOver && (
+                                            <span
+                                                className="renew-over-tag"
+                                                title="Renewal date for this year has passed; showing next year's renewal"
+                                            >
+                                                Next Year
+                                            </span>
+                                        )}
+                                    </div>
+                                </td>
                                 <td>{insuranceCompany}</td>
                                 <td>{mobileNumber}</td>
                                 <td>

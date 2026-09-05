@@ -56,6 +56,31 @@
     flex-wrap: wrap;
 }
 
+.LogoutButton {
+    background-color: rgba(229, 57, 53, 0.15);
+    border: 1px solid rgba(229, 57, 53, 0.55);
+    color: #ff9999;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.LogoutButton:hover {
+    background-color: #e53935;
+    color: #ffffff;
+}
+
+.LogoutButton:active {
+    transform: scale(0.97);
+}
+
+
 /* Hamburger toggle button */
 .MenuToggle {
     display: none;
@@ -144,6 +169,14 @@
     .ButtonDiv.open {
         display: flex;
         animation: slideDown 0.25s ease-out forwards;
+    }
+
+    .LogoutButton {
+        width: 100%;
+        padding: 12px 18px;
+        font-size: 1rem;
+        margin-top: 8px;
+        justify-content: flex-start;
     }
 
     @keyframes slideDown {

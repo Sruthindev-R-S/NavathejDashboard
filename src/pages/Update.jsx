@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { apiFetch } from '../config/api'
 import '../styles/pages.css'
 
 export default function Update(){
@@ -24,11 +25,8 @@ export default function Update(){
 
         setLoading(true)
         try {
-            const response = await fetch('https://vehicle-9srx.onrender.com/updateVehicle', {
+            const response = await apiFetch('/updateVehicle', {
                 method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify({
                     vehicle_number: trimmedVehicle,
                     phone_number: trimmedPhone

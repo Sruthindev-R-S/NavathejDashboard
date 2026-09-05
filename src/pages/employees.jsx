@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { apiFetch } from '../config/api'
 import '../styles/pages.css'
 
 export default function Employee(){
@@ -6,7 +7,7 @@ export default function Employee(){
 
     async function getData() {
         try {
-            const response = await fetch('https://vehicle-9srx.onrender.com/getEmployee')
+            const response = await apiFetch('/getEmployee')
             const data = await response.json()
             setUsers(Array.isArray(data) ? data : data.users ?? data.employees ?? [])
         } catch (error) {
@@ -18,7 +19,7 @@ export default function Employee(){
         let isMounted = true
         async function fetchEmployees() {
             try {
-                const response = await fetch('https://vehicle-9srx.onrender.com/getEmployee')
+                const response = await apiFetch('/getEmployee')
                 const data = await response.json()
                 if (isMounted) {
                     setUsers(Array.isArray(data) ? data : data.users ?? data.employees ?? [])
@@ -45,11 +46,8 @@ export default function Employee(){
         }
 
         try {
-            const response = await fetch('https://vehicle-9srx.onrender.com/addEmployee', {
+            const response = await apiFetch('/addEmployee', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
                 body: JSON.stringify(newEmployee)
             })
 
@@ -69,8 +67,8 @@ export default function Employee(){
     async function onClick(phoneNumber){
         try {
             const query = new URLSearchParams({ phone_number: String(phoneNumber) })
-            const response = await fetch(
-                `https://vehicle-9srx.onrender.com/deleteEmployee?${query}`,
+            const response = await apiFetch(
+                `/deleteEmployee?${query}`,
                 { method: 'DELETE' }
             )
 
